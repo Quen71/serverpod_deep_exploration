@@ -1,0 +1,5 @@
+class: LaserSaber
+table: laser_saber
+fields:
+  name: String
+  color: String

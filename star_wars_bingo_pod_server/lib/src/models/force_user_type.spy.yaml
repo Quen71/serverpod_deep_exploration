@@ -1,0 +1,7 @@
+enum: ForceUserType
+serialized: byName
+values:
+  - sithMaster
+  - sithApprentice
+  - jediMaster
+  - jediApprentice

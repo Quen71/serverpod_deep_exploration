@@ -1,0 +1,9 @@
+class: ForceUser
+fields:
+    id: int?
+    type: ForceUserType
+    name: String
+    laserSaber: LaserSaber
+    master: ForceUser?
+    apprentices: List<ForceUser>
+    droids: List<Droid>

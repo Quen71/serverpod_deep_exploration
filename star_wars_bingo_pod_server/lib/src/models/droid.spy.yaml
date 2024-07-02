@@ -1,0 +1,5 @@
+class: Droid
+table: droid
+fields: 
+  name: String
+  forceUserMaster: ForceUserRaw?, relation(name=force_user_droids)

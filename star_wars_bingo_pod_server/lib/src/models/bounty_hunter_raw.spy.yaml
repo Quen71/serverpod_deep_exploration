@@ -1,0 +1,9 @@
+class: BountyHunterRaw
+table: bounty_hunter_raw
+fields:
+  userInfo: module:auth:UserInfo?, relation
+  hunterHuntedList: List<HunterHunted>?, relation(name=hunter)
+indexes:
+  user_info_id_unique_idx:
+    fields: userInfoId
+    unique: true

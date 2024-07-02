@@ -1,0 +1,11 @@
+class: ForceUserRaw
+table: force_user_raw
+fields:
+  type: ForceUserType
+  name: String
+  laserSaber: LaserSaber?, relation(optional)
+  master: ForceUserRaw?, relation(name=force_user_apprentice, optional, onDelete=SetNull)
+  apprentices: List<ForceUserRaw>?, relation(name=force_user_apprentice)
+  droids: List<Droid>?, relation(name=force_user_droids)
+  hunterHuntedList: List<HunterHunted>?, relation(name=hunted)
+    

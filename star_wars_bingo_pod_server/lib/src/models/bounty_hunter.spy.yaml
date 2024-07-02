@@ -1,0 +1,5 @@
+class: BountyHunter
+fields:
+    id: int?
+    userInfo: module:auth:UserInfo
+    forceUsers: List<ForceUser>

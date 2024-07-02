@@ -1,0 +1,9 @@
+class: HunterHunted
+table: hunter_hunted
+fields:
+  bountyHunter: BountyHunterRaw?, relation(name=hunter)
+  forceUser: ForceUserRaw?, relation(name=hunted)
+indexes:
+  hunter_hunted_index_idx:
+    fields: bountyHunterId, forceUserId
+    unique: true
