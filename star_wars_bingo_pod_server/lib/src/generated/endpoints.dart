@@ -10,9 +10,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import '../endpoints/bounty_hunter.endpoint.dart' as _i2;
-import '../endpoints/example_endpoint.dart' as _i3;
-import '../endpoints/force_user.endpoint.dart' as _i4;
+import '../endpoints/force_user.endpoint.dart' as _i3;
 import 'package:star_wars_bingo_pod_server/src/generated/force_user.dart'
+    as _i4;
+import 'package:star_wars_bingo_pod_server/src/generated/force_user_type.dart'
     as _i5;
 import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i6;
 
@@ -26,13 +27,7 @@ class Endpoints extends _i1.EndpointDispatch {
           'bountyHunter',
           null,
         ),
-      'example': _i3.ExampleEndpoint()
-        ..initialize(
-          server,
-          'example',
-          null,
-        ),
-      'forceUser': _i4.ForceUserEndpoint()
+      'forceUser': _i3.ForceUserEndpoint()
         ..initialize(
           server,
           'forceUser',
@@ -43,16 +38,6 @@ class Endpoints extends _i1.EndpointDispatch {
       name: 'bountyHunter',
       endpoint: endpoints['bountyHunter']!,
       methodConnectors: {
-        'me': _i1.MethodConnector(
-          name: 'me',
-          params: {},
-          call: (
-            _i1.Session session,
-            Map<String, dynamic> params,
-          ) async =>
-              (endpoints['bountyHunter'] as _i2.BountyHunterEndpoint)
-                  .me(session),
-        ),
         'meRaw': _i1.MethodConnector(
           name: 'meRaw',
           params: {},
@@ -63,8 +48,18 @@ class Endpoints extends _i1.EndpointDispatch {
               (endpoints['bountyHunter'] as _i2.BountyHunterEndpoint)
                   .meRaw(session),
         ),
-        'addForceUserToBingoBook': _i1.MethodConnector(
-          name: 'addForceUserToBingoBook',
+        'me': _i1.MethodConnector(
+          name: 'me',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['bountyHunter'] as _i2.BountyHunterEndpoint)
+                  .me(session),
+        ),
+        'addForceUserToPreysList': _i1.MethodConnector(
+          name: 'addForceUserToPreysList',
           params: {
             'forceUserId': _i1.ParameterDescription(
               name: 'forceUserId',
@@ -77,23 +72,17 @@ class Endpoints extends _i1.EndpointDispatch {
             Map<String, dynamic> params,
           ) async =>
               (endpoints['bountyHunter'] as _i2.BountyHunterEndpoint)
-                  .addForceUserToBingoBook(
+                  .addForceUserToPreysList(
             session,
             params['forceUserId'],
           ),
         ),
-      },
-    );
-    connectors['example'] = _i1.EndpointConnector(
-      name: 'example',
-      endpoint: endpoints['example']!,
-      methodConnectors: {
-        'hello': _i1.MethodConnector(
-          name: 'hello',
+        'withdrawForceUserFromPreysList': _i1.MethodConnector(
+          name: 'withdrawForceUserFromPreysList',
           params: {
-            'name': _i1.ParameterDescription(
-              name: 'name',
-              type: _i1.getType<String>(),
+            'forceUserId': _i1.ParameterDescription(
+              name: 'forceUserId',
+              type: _i1.getType<int>(),
               nullable: false,
             )
           },
@@ -101,23 +90,24 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['example'] as _i3.ExampleEndpoint).hello(
+              (endpoints['bountyHunter'] as _i2.BountyHunterEndpoint)
+                  .withdrawForceUserFromPreysList(
             session,
-            params['name'],
+            forceUserId: params['forceUserId'],
           ),
-        )
+        ),
       },
     );
     connectors['forceUser'] = _i1.EndpointConnector(
       name: 'forceUser',
       endpoint: endpoints['forceUser']!,
       methodConnectors: {
-        'create': _i1.MethodConnector(
-          name: 'create',
+        'get': _i1.MethodConnector(
+          name: 'get',
           params: {
-            'forceUser': _i1.ParameterDescription(
-              name: 'forceUser',
-              type: _i1.getType<_i5.ForceUser>(),
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
               nullable: false,
             )
           },
@@ -125,11 +115,162 @@ class Endpoints extends _i1.EndpointDispatch {
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['forceUser'] as _i4.ForceUserEndpoint).create(
+              (endpoints['forceUser'] as _i3.ForceUserEndpoint).get(
+            session,
+            id: params['id'],
+          ),
+        ),
+        'create': _i1.MethodConnector(
+          name: 'create',
+          params: {
+            'forceUser': _i1.ParameterDescription(
+              name: 'forceUser',
+              type: _i1.getType<_i4.ForceUser>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['forceUser'] as _i3.ForceUserEndpoint).create(
             session,
             params['forceUser'],
           ),
-        )
+        ),
+        'update': _i1.MethodConnector(
+          name: 'update',
+          params: {
+            'forceUser': _i1.ParameterDescription(
+              name: 'forceUser',
+              type: _i1.getType<_i4.ForceUser>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['forceUser'] as _i3.ForceUserEndpoint).update(
+            session,
+            forceUser: params['forceUser'],
+          ),
+        ),
+        'delete': _i1.MethodConnector(
+          name: 'delete',
+          params: {
+            'forceUserId': _i1.ParameterDescription(
+              name: 'forceUserId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['forceUser'] as _i3.ForceUserEndpoint).delete(
+            session,
+            forceUserId: params['forceUserId'],
+          ),
+        ),
+        'withoutMasterApprentices': _i1.MethodConnector(
+          name: 'withoutMasterApprentices',
+          params: {
+            'forceType': _i1.ParameterDescription(
+              name: 'forceType',
+              type: _i1.getType<_i5.ForceUserType>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['forceUser'] as _i3.ForceUserEndpoint)
+                  .withoutMasterApprentices(
+            session,
+            forceType: params['forceType'],
+          ),
+        ),
+        'masters': _i1.MethodConnector(
+          name: 'masters',
+          params: {
+            'forceType': _i1.ParameterDescription(
+              name: 'forceType',
+              type: _i1.getType<_i5.ForceUserType>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['forceUser'] as _i3.ForceUserEndpoint).masters(
+            session,
+            forceType: params['forceType'],
+          ),
+        ),
+        'addApprenticeToMaster': _i1.MethodConnector(
+          name: 'addApprenticeToMaster',
+          params: {
+            'masterId': _i1.ParameterDescription(
+              name: 'masterId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'apprenticeId': _i1.ParameterDescription(
+              name: 'apprenticeId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['forceUser'] as _i3.ForceUserEndpoint)
+                  .addApprenticeToMaster(
+            session,
+            masterId: params['masterId'],
+            apprenticeId: params['apprenticeId'],
+          ),
+        ),
+        'addMasterToApprentice': _i1.MethodConnector(
+          name: 'addMasterToApprentice',
+          params: {
+            'apprenticeId': _i1.ParameterDescription(
+              name: 'apprenticeId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+            'masterId': _i1.ParameterDescription(
+              name: 'masterId',
+              type: _i1.getType<int>(),
+              nullable: false,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['forceUser'] as _i3.ForceUserEndpoint)
+                  .addMasterToApprentice(
+            session,
+            apprenticeId: params['apprenticeId'],
+            masterId: params['masterId'],
+          ),
+        ),
+        'allNotHunted': _i1.MethodConnector(
+          name: 'allNotHunted',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['forceUser'] as _i3.ForceUserEndpoint)
+                  .allNotHunted(session),
+        ),
       },
     );
     modules['serverpod_auth'] = _i6.Endpoints()..initializeEndpoints(server);

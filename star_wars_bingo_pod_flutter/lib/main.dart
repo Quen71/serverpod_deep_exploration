@@ -4,8 +4,11 @@ import 'package:serverpod_auth_shared_flutter/serverpod_auth_shared_flutter.dart
 import 'package:flutter/material.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 import 'package:star_wars_bingo_pod_client/star_wars_bingo_pod_client.dart';
-import 'package:star_wars_bingo_pod_flutter/auth/presentation/widgets/auth.widget.dart';
-import 'package:star_wars_bingo_pod_flutter/auth/presentation/widgets/validate_account.dialog.dart';
+import 'package:star_wars_bingo_pod_flutter/presentation/auth/widgets/auth.widget.dart';
+import 'package:star_wars_bingo_pod_flutter/presentation/auth/dialogs/validate_account.dialog.dart';
+import 'package:star_wars_bingo_pod_flutter/presentation/preys/bottom_sheets/add_force_user.bottom_sheet.dart';
+import 'package:star_wars_bingo_pod_flutter/presentation/preys/widgets/prey_item.widget.dart';
+import 'package:star_wars_bingo_pod_flutter/presentation/preys/dialogs/preys_shop.dialog.dart';
 
 late Client client;
 late SessionManager sessionManager;
@@ -55,29 +58,50 @@ class MyHomePageState extends State<MyHomePage> {
       TextEditingController();
 
   bool _isLoading = false;
-  UserInfo? _authenticatedUser;
+  BountyHunter? _me;
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      _authenticatedUser = getLastSession();
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _me = await getLastSession();
+      setState(() {});
 
-    sessionManager.addListener(() {
-      setState(() {
-        _authenticatedUser = getLastSession();
+      sessionManager.addListener(() async {
+        _me = await getLastSession();
+        setState(() {});
       });
     });
   }
 
-  UserInfo? getLastSession() => sessionManager.signedInUser;
+  Future<BountyHunter?> getLastSession() async {
+    final UserInfo? user = sessionManager.signedInUser;
+
+    if (user == null) return null;
+
+    try {
+      return client.bountyHunter.me();
+    } catch (e) {
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Star Wars Pod"),
+        leading: IconButton(
+          onPressed: () async {
+            await showDialog(
+              context: context,
+              builder: (context) => const PreysShopDialog(),
+            );
+
+            sessionManager.refreshSession();
+          },
+          icon: const Icon(Icons.control_camera),
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -94,7 +118,7 @@ class MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              if (_authenticatedUser == null)
+              if (_me == null)
                 AuthWidget(
                   emailController: _emailController,
                   usernameController: _usernameController,
@@ -160,14 +184,35 @@ class MyHomePageState extends State<MyHomePage> {
                   },
                 ),
               if (_isLoading) const CircularProgressIndicator(),
-              if (_authenticatedUser != null)
+              if (_me != null)
                 Text(
-                  'Hi ${_authenticatedUser?.userName}!',
+                  'Hi ${_me?.userInfo.userName}!',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
+              if (_me != null)
+                ListView.builder(
+                  itemCount: _me!.forceUsers.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final ForceUser forceUser = _me!.forceUsers[index];
+                    return PreyItemWidget(forceUser: forceUser);
+                  },
+                )
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await showModalBottomSheet(
+            context: context,
+            builder: (context) => const AddForceUserBottomSheet(),
+          );
+
+          await sessionManager.refreshSession();
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

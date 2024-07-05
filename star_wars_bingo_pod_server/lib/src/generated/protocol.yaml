@@ -1,8 +1,15 @@
 bountyHunter:
-  - me:
   - meRaw:
-  - addForceUserToBingoBook:
-example:
-  - hello:
+  - me:
+  - addForceUserToPreysList:
+  - withdrawForceUserFromPreysList:
 forceUser:
+  - get:
   - create:
+  - update:
+  - delete:
+  - withoutMasterApprentices:
+  - masters:
+  - addApprenticeToMaster:
+  - addMasterToApprentice:
+  - allNotHunted:

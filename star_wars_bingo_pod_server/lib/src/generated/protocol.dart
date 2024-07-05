@@ -15,17 +15,17 @@ import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i3;
 import 'bounty_hunter.dart' as _i4;
 import 'bounty_hunter_raw.dart' as _i5;
 import 'droid.dart' as _i6;
-import 'example.dart' as _i7;
-import 'force_user.dart' as _i8;
-import 'force_user_raw.dart' as _i9;
-import 'force_user_type.dart' as _i10;
-import 'hunter_hunted.dart' as _i11;
-import 'laser_saber.dart' as _i12;
-import 'protocol.dart' as _i13;
+import 'force_user.dart' as _i7;
+import 'force_user_raw.dart' as _i8;
+import 'force_user_type.dart' as _i9;
+import 'hunter_hunted.dart' as _i10;
+import 'laser_saber.dart' as _i11;
+import 'protocol.dart' as _i12;
+import 'package:star_wars_bingo_pod_server/src/generated/force_user.dart'
+    as _i13;
 export 'bounty_hunter.dart';
 export 'bounty_hunter_raw.dart';
 export 'droid.dart';
-export 'example.dart';
 export 'force_user.dart';
 export 'force_user_raw.dart';
 export 'force_user_type.dart';
@@ -379,23 +379,20 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i6.Droid) {
       return _i6.Droid.fromJson(data) as T;
     }
-    if (t == _i7.Example) {
-      return _i7.Example.fromJson(data) as T;
+    if (t == _i7.ForceUser) {
+      return _i7.ForceUser.fromJson(data) as T;
     }
-    if (t == _i8.ForceUser) {
-      return _i8.ForceUser.fromJson(data) as T;
+    if (t == _i8.ForceUserRaw) {
+      return _i8.ForceUserRaw.fromJson(data) as T;
     }
-    if (t == _i9.ForceUserRaw) {
-      return _i9.ForceUserRaw.fromJson(data) as T;
+    if (t == _i9.ForceUserType) {
+      return _i9.ForceUserType.fromJson(data) as T;
     }
-    if (t == _i10.ForceUserType) {
-      return _i10.ForceUserType.fromJson(data) as T;
+    if (t == _i10.HunterHunted) {
+      return _i10.HunterHunted.fromJson(data) as T;
     }
-    if (t == _i11.HunterHunted) {
-      return _i11.HunterHunted.fromJson(data) as T;
-    }
-    if (t == _i12.LaserSaber) {
-      return _i12.LaserSaber.fromJson(data) as T;
+    if (t == _i11.LaserSaber) {
+      return _i11.LaserSaber.fromJson(data) as T;
     }
     if (t == _i1.getType<_i4.BountyHunter?>()) {
       return (data != null ? _i4.BountyHunter.fromJson(data) : null) as T;
@@ -406,57 +403,58 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<_i6.Droid?>()) {
       return (data != null ? _i6.Droid.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i7.Example?>()) {
-      return (data != null ? _i7.Example.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i7.ForceUser?>()) {
+      return (data != null ? _i7.ForceUser.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i8.ForceUser?>()) {
-      return (data != null ? _i8.ForceUser.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i8.ForceUserRaw?>()) {
+      return (data != null ? _i8.ForceUserRaw.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i9.ForceUserRaw?>()) {
-      return (data != null ? _i9.ForceUserRaw.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i9.ForceUserType?>()) {
+      return (data != null ? _i9.ForceUserType.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i10.ForceUserType?>()) {
-      return (data != null ? _i10.ForceUserType.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i10.HunterHunted?>()) {
+      return (data != null ? _i10.HunterHunted.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i11.HunterHunted?>()) {
-      return (data != null ? _i11.HunterHunted.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i11.LaserSaber?>()) {
+      return (data != null ? _i11.LaserSaber.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i12.LaserSaber?>()) {
-      return (data != null ? _i12.LaserSaber.fromJson(data) : null) as T;
+    if (t == List<_i12.ForceUser>) {
+      return (data as List).map((e) => deserialize<_i12.ForceUser>(e)).toList()
+          as dynamic;
+    }
+    if (t == _i1.getType<List<_i12.HunterHunted>?>()) {
+      return (data != null
+          ? (data as List)
+              .map((e) => deserialize<_i12.HunterHunted>(e))
+              .toList()
+          : null) as dynamic;
+    }
+    if (t == List<_i12.Droid>) {
+      return (data as List).map((e) => deserialize<_i12.Droid>(e)).toList()
+          as dynamic;
+    }
+    if (t == _i1.getType<List<_i12.ForceUserRaw>?>()) {
+      return (data != null
+          ? (data as List)
+              .map((e) => deserialize<_i12.ForceUserRaw>(e))
+              .toList()
+          : null) as dynamic;
+    }
+    if (t == _i1.getType<List<_i12.Droid>?>()) {
+      return (data != null
+          ? (data as List).map((e) => deserialize<_i12.Droid>(e)).toList()
+          : null) as dynamic;
+    }
+    if (t == _i1.getType<List<_i12.HunterHunted>?>()) {
+      return (data != null
+          ? (data as List)
+              .map((e) => deserialize<_i12.HunterHunted>(e))
+              .toList()
+          : null) as dynamic;
     }
     if (t == List<_i13.ForceUser>) {
       return (data as List).map((e) => deserialize<_i13.ForceUser>(e)).toList()
           as dynamic;
-    }
-    if (t == _i1.getType<List<_i13.HunterHunted>?>()) {
-      return (data != null
-          ? (data as List)
-              .map((e) => deserialize<_i13.HunterHunted>(e))
-              .toList()
-          : null) as dynamic;
-    }
-    if (t == List<_i13.Droid>) {
-      return (data as List).map((e) => deserialize<_i13.Droid>(e)).toList()
-          as dynamic;
-    }
-    if (t == _i1.getType<List<_i13.ForceUserRaw>?>()) {
-      return (data != null
-          ? (data as List)
-              .map((e) => deserialize<_i13.ForceUserRaw>(e))
-              .toList()
-          : null) as dynamic;
-    }
-    if (t == _i1.getType<List<_i13.Droid>?>()) {
-      return (data != null
-          ? (data as List).map((e) => deserialize<_i13.Droid>(e)).toList()
-          : null) as dynamic;
-    }
-    if (t == _i1.getType<List<_i13.HunterHunted>?>()) {
-      return (data != null
-          ? (data as List)
-              .map((e) => deserialize<_i13.HunterHunted>(e))
-              .toList()
-          : null) as dynamic;
     }
     try {
       return _i3.Protocol().deserialize<T>(data, t);
@@ -483,22 +481,19 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data is _i6.Droid) {
       return 'Droid';
     }
-    if (data is _i7.Example) {
-      return 'Example';
-    }
-    if (data is _i8.ForceUser) {
+    if (data is _i7.ForceUser) {
       return 'ForceUser';
     }
-    if (data is _i9.ForceUserRaw) {
+    if (data is _i8.ForceUserRaw) {
       return 'ForceUserRaw';
     }
-    if (data is _i10.ForceUserType) {
+    if (data is _i9.ForceUserType) {
       return 'ForceUserType';
     }
-    if (data is _i11.HunterHunted) {
+    if (data is _i10.HunterHunted) {
       return 'HunterHunted';
     }
-    if (data is _i12.LaserSaber) {
+    if (data is _i11.LaserSaber) {
       return 'LaserSaber';
     }
     return super.getClassNameForObject(data);
@@ -519,23 +514,20 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data['className'] == 'Droid') {
       return deserialize<_i6.Droid>(data['data']);
     }
-    if (data['className'] == 'Example') {
-      return deserialize<_i7.Example>(data['data']);
-    }
     if (data['className'] == 'ForceUser') {
-      return deserialize<_i8.ForceUser>(data['data']);
+      return deserialize<_i7.ForceUser>(data['data']);
     }
     if (data['className'] == 'ForceUserRaw') {
-      return deserialize<_i9.ForceUserRaw>(data['data']);
+      return deserialize<_i8.ForceUserRaw>(data['data']);
     }
     if (data['className'] == 'ForceUserType') {
-      return deserialize<_i10.ForceUserType>(data['data']);
+      return deserialize<_i9.ForceUserType>(data['data']);
     }
     if (data['className'] == 'HunterHunted') {
-      return deserialize<_i11.HunterHunted>(data['data']);
+      return deserialize<_i10.HunterHunted>(data['data']);
     }
     if (data['className'] == 'LaserSaber') {
-      return deserialize<_i12.LaserSaber>(data['data']);
+      return deserialize<_i11.LaserSaber>(data['data']);
     }
     return super.deserializeByClassName(data);
   }
@@ -559,12 +551,12 @@ class Protocol extends _i1.SerializationManagerServer {
         return _i5.BountyHunterRaw.t;
       case _i6.Droid:
         return _i6.Droid.t;
-      case _i9.ForceUserRaw:
-        return _i9.ForceUserRaw.t;
-      case _i11.HunterHunted:
-        return _i11.HunterHunted.t;
-      case _i12.LaserSaber:
-        return _i12.LaserSaber.t;
+      case _i8.ForceUserRaw:
+        return _i8.ForceUserRaw.t;
+      case _i10.HunterHunted:
+        return _i10.HunterHunted.t;
+      case _i11.LaserSaber:
+        return _i11.LaserSaber.t;
     }
     return null;
   }
