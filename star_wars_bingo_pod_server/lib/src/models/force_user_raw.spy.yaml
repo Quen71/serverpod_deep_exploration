@@ -8,4 +8,3 @@ fields:
   apprentices: List<ForceUserRaw>?, relation(name=force_user_apprentice)
   droids: List<Droid>?, relation(name=force_user_droids)
   hunterHuntedList: List<HunterHunted>?, relation(name=hunted)
-    

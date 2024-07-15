@@ -61,6 +61,50 @@ class _UpdateApprenticeBottomSheetState
     });
   }
 
+  List<Droid> getUpdatedDroids() {
+    Droid? droidFirst;
+    Droid? droidSecond;
+    Droid? droidThird;
+
+    widget.forceUserApprentice.droids.asMap().map((index, droid) {
+      if (index == 0) {
+        droidFirst = droid.copyWith(name: _firstDroidNameController.text);
+      }
+      if (index == 1) {
+        droidSecond = droid.copyWith(name: _firstDroidNameController.text);
+      }
+      if (index == 3) {
+        droidThird = droid.copyWith(name: _firstDroidNameController.text);
+      }
+      return MapEntry(index, droid);
+    });
+
+    if (droidFirst == null && _firstDroidNameController.text.isNotEmpty) {
+      droidFirst = Droid(
+        name: _firstDroidNameController.text,
+        forceUserMasterId: widget.forceUserApprentice.id!,
+      );
+    }
+    if (droidSecond == null && _secondDroidNameController.text.isNotEmpty) {
+      droidSecond = Droid(
+        name: _secondDroidNameController.text,
+        forceUserMasterId: widget.forceUserApprentice.id!,
+      );
+    }
+    if (droidThird == null && _thirdDroidNameController.text.isNotEmpty) {
+      droidThird = Droid(
+        name: _thirdDroidNameController.text,
+        forceUserMasterId: widget.forceUserApprentice.id!,
+      );
+    }
+
+    return [
+      if (droidFirst != null) droidFirst!,
+      if (droidSecond != null) droidSecond!,
+      if (droidThird != null) droidThird!,
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return BottomSheet(
@@ -164,6 +208,7 @@ class _UpdateApprenticeBottomSheetState
                           name: _laserSaberNameController.text,
                           color: _laserSaberColorController.text,
                         ),
+                        droids: getUpdatedDroids(),
                       );
 
                       await client.forceUser

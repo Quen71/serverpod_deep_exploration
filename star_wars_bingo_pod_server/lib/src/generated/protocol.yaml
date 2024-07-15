@@ -1,5 +1,4 @@
 bountyHunter:
-  - meRaw:
   - me:
   - addForceUserToPreysList:
   - withdrawForceUserFromPreysList:

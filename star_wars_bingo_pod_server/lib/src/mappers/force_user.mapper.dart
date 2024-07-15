@@ -7,7 +7,11 @@ class ForceUserMapper extends Mapper<ForceUserRaw, ForceUser> {
         id: rawModel.id,
         type: rawModel.type,
         name: rawModel.name,
-        laserSaber: rawModel.laserSaber!,
+        laserSaber: rawModel.laserSaber ??
+            LaserSaber(
+              name: 'DEFAULT',
+              color: 'DEFAULT',
+            ),
         master: rawModel.master == null
             ? null
             : toModel(rawModel: rawModel.master!),

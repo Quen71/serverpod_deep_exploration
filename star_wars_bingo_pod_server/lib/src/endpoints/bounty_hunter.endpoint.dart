@@ -7,21 +7,8 @@ class BountyHunterEndpoint extends Endpoint {
   @override
   bool get requireLogin => true;
 
-  Future<BountyHunterRaw> meRaw(Session session) async {
-    final int? userId = (await session.authenticated)?.userId;
-
-    if (userId == null) throw Error();
-
-    final BountyHunterRaw res = await BountyHunterRawUtils.getFirstWhere(
-      session: session,
-      where: (bH) => bH.userInfoId.equals(userId),
-    );
-
-    return res;
-  }
-
   Future<BountyHunter> me(Session session) async {
-    final BountyHunterRaw res = await meRaw(session);
+    final BountyHunterRaw res = await _meRaw(session);
 
     return BountyHunterMapper().toModel(rawModel: res);
   }
@@ -30,13 +17,11 @@ class BountyHunterEndpoint extends Endpoint {
     Session session,
     int forceUserId,
   ) async {
-    final BountyHunterRaw loggedBountyHunter = await meRaw(session);
-    late ForceUserRaw? forceUserRaw;
-    late HunterHunted hunterHunted;
+    final BountyHunterRaw loggedBountyHunter = await _meRaw(session);
 
     await session.db.transaction(
       (transaction) async {
-        forceUserRaw = await ForceUserRaw.db.findFirstRow(
+        ForceUserRaw? forceUserRaw = await ForceUserRaw.db.findFirstRow(
           session,
           where: (fU) => fU.id.equals(forceUserId),
           transaction: transaction,
@@ -44,23 +29,12 @@ class BountyHunterEndpoint extends Endpoint {
 
         if (forceUserRaw == null) throw Error();
 
-        hunterHunted = await HunterHunted.db.insertRow(
+        await HunterHunted.db.insertRow(
           session,
           HunterHunted(
               bountyHunterId: loggedBountyHunter.id!, forceUserId: forceUserId),
         );
       },
-    );
-
-    await BountyHunterRaw.db.attachRow.hunterHuntedList(
-      session,
-      loggedBountyHunter,
-      hunterHunted,
-    );
-    await ForceUserRaw.db.attachRow.hunterHuntedList(
-      session,
-      forceUserRaw!,
-      hunterHunted,
     );
 
     return await me(session);
@@ -75,7 +49,7 @@ class BountyHunterEndpoint extends Endpoint {
 
     if (forceUserRaw == null) throw Exception();
 
-    final BountyHunterRaw meRawRes = await meRaw(session);
+    final BountyHunterRaw meRawRes = await _meRaw(session);
 
     final HunterHunted? hunterHuntedRes = await HunterHunted.db.findFirstRow(
       session,
@@ -89,5 +63,18 @@ class BountyHunterEndpoint extends Endpoint {
     HunterHunted.db.deleteRow(session, hunterHuntedRes);
 
     return await me(session);
+  }
+
+  Future<BountyHunterRaw> _meRaw(Session session) async {
+    final int? userId = (await session.authenticated)?.userId;
+
+    if (userId == null) throw Error();
+
+    final BountyHunterRaw res = await BountyHunterRawUtils.getFirstWhere(
+      session: session,
+      where: (bH) => bH.userInfoId.equals(userId),
+    );
+
+    return res;
   }
 }

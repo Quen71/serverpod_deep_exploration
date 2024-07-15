@@ -38,16 +38,6 @@ class Endpoints extends _i1.EndpointDispatch {
       name: 'bountyHunter',
       endpoint: endpoints['bountyHunter']!,
       methodConnectors: {
-        'meRaw': _i1.MethodConnector(
-          name: 'meRaw',
-          params: {},
-          call: (
-            _i1.Session session,
-            Map<String, dynamic> params,
-          ) async =>
-              (endpoints['bountyHunter'] as _i2.BountyHunterEndpoint)
-                  .meRaw(session),
-        ),
         'me': _i1.MethodConnector(
           name: 'me',
           params: {},

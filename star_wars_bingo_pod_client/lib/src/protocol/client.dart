@@ -10,15 +10,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
-import 'package:star_wars_bingo_pod_client/src/protocol/bounty_hunter_raw.dart'
-    as _i3;
 import 'package:star_wars_bingo_pod_client/src/protocol/bounty_hunter.dart'
-    as _i4;
-import 'package:star_wars_bingo_pod_client/src/protocol/force_user.dart' as _i5;
+    as _i3;
+import 'package:star_wars_bingo_pod_client/src/protocol/force_user.dart' as _i4;
 import 'package:star_wars_bingo_pod_client/src/protocol/force_user_type.dart'
-    as _i6;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i7;
-import 'protocol.dart' as _i8;
+    as _i5;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i6;
+import 'protocol.dart' as _i7;
 
 /// {@category Endpoint}
 class EndpointBountyHunter extends _i1.EndpointRef {
@@ -27,30 +25,23 @@ class EndpointBountyHunter extends _i1.EndpointRef {
   @override
   String get name => 'bountyHunter';
 
-  _i2.Future<_i3.BountyHunterRaw> meRaw() =>
-      caller.callServerEndpoint<_i3.BountyHunterRaw>(
-        'bountyHunter',
-        'meRaw',
-        {},
-      );
-
-  _i2.Future<_i4.BountyHunter> me() =>
-      caller.callServerEndpoint<_i4.BountyHunter>(
+  _i2.Future<_i3.BountyHunter> me() =>
+      caller.callServerEndpoint<_i3.BountyHunter>(
         'bountyHunter',
         'me',
         {},
       );
 
-  _i2.Future<_i4.BountyHunter> addForceUserToPreysList(int forceUserId) =>
-      caller.callServerEndpoint<_i4.BountyHunter>(
+  _i2.Future<_i3.BountyHunter> addForceUserToPreysList(int forceUserId) =>
+      caller.callServerEndpoint<_i3.BountyHunter>(
         'bountyHunter',
         'addForceUserToPreysList',
         {'forceUserId': forceUserId},
       );
 
-  _i2.Future<_i4.BountyHunter> withdrawForceUserFromPreysList(
+  _i2.Future<_i3.BountyHunter> withdrawForceUserFromPreysList(
           {required int forceUserId}) =>
-      caller.callServerEndpoint<_i4.BountyHunter>(
+      caller.callServerEndpoint<_i3.BountyHunter>(
         'bountyHunter',
         'withdrawForceUserFromPreysList',
         {'forceUserId': forceUserId},
@@ -64,22 +55,22 @@ class EndpointForceUser extends _i1.EndpointRef {
   @override
   String get name => 'forceUser';
 
-  _i2.Future<_i5.ForceUser> get({required int id}) =>
-      caller.callServerEndpoint<_i5.ForceUser>(
+  _i2.Future<_i4.ForceUser> get({required int id}) =>
+      caller.callServerEndpoint<_i4.ForceUser>(
         'forceUser',
         'get',
         {'id': id},
       );
 
-  _i2.Future<_i5.ForceUser> create(_i5.ForceUser forceUser) =>
-      caller.callServerEndpoint<_i5.ForceUser>(
+  _i2.Future<_i4.ForceUser> create(_i4.ForceUser forceUser) =>
+      caller.callServerEndpoint<_i4.ForceUser>(
         'forceUser',
         'create',
         {'forceUser': forceUser},
       );
 
-  _i2.Future<_i5.ForceUser> update({required _i5.ForceUser forceUser}) =>
-      caller.callServerEndpoint<_i5.ForceUser>(
+  _i2.Future<_i4.ForceUser> update({required _i4.ForceUser forceUser}) =>
+      caller.callServerEndpoint<_i4.ForceUser>(
         'forceUser',
         'update',
         {'forceUser': forceUser},
@@ -92,27 +83,27 @@ class EndpointForceUser extends _i1.EndpointRef {
         {'forceUserId': forceUserId},
       );
 
-  _i2.Future<List<_i5.ForceUser>> withoutMasterApprentices(
-          {required _i6.ForceUserType forceType}) =>
-      caller.callServerEndpoint<List<_i5.ForceUser>>(
+  _i2.Future<List<_i4.ForceUser>> withoutMasterApprentices(
+          {required _i5.ForceUserType forceType}) =>
+      caller.callServerEndpoint<List<_i4.ForceUser>>(
         'forceUser',
         'withoutMasterApprentices',
         {'forceType': forceType},
       );
 
-  _i2.Future<List<_i5.ForceUser>> masters(
-          {required _i6.ForceUserType forceType}) =>
-      caller.callServerEndpoint<List<_i5.ForceUser>>(
+  _i2.Future<List<_i4.ForceUser>> masters(
+          {required _i5.ForceUserType forceType}) =>
+      caller.callServerEndpoint<List<_i4.ForceUser>>(
         'forceUser',
         'masters',
         {'forceType': forceType},
       );
 
-  _i2.Future<_i5.ForceUser> addApprenticeToMaster({
+  _i2.Future<_i4.ForceUser> addApprenticeToMaster({
     required int masterId,
     required int apprenticeId,
   }) =>
-      caller.callServerEndpoint<_i5.ForceUser>(
+      caller.callServerEndpoint<_i4.ForceUser>(
         'forceUser',
         'addApprenticeToMaster',
         {
@@ -121,11 +112,11 @@ class EndpointForceUser extends _i1.EndpointRef {
         },
       );
 
-  _i2.Future<_i5.ForceUser> addMasterToApprentice({
+  _i2.Future<_i4.ForceUser> addMasterToApprentice({
     required int apprenticeId,
     required int masterId,
   }) =>
-      caller.callServerEndpoint<_i5.ForceUser>(
+      caller.callServerEndpoint<_i4.ForceUser>(
         'forceUser',
         'addMasterToApprentice',
         {
@@ -134,8 +125,8 @@ class EndpointForceUser extends _i1.EndpointRef {
         },
       );
 
-  _i2.Future<List<_i5.ForceUser>> allNotHunted() =>
-      caller.callServerEndpoint<List<_i5.ForceUser>>(
+  _i2.Future<List<_i4.ForceUser>> allNotHunted() =>
+      caller.callServerEndpoint<List<_i4.ForceUser>>(
         'forceUser',
         'allNotHunted',
         {},
@@ -144,10 +135,10 @@ class EndpointForceUser extends _i1.EndpointRef {
 
 class _Modules {
   _Modules(Client client) {
-    auth = _i7.Caller(client);
+    auth = _i6.Caller(client);
   }
 
-  late final _i7.Caller auth;
+  late final _i6.Caller auth;
 }
 
 class Client extends _i1.ServerpodClient {
@@ -165,7 +156,7 @@ class Client extends _i1.ServerpodClient {
     Function(_i1.MethodCallContext)? onSucceededCall,
   }) : super(
           host,
-          _i8.Protocol(),
+          _i7.Protocol(),
           securityContext: securityContext,
           authenticationKeyManager: authenticationKeyManager,
           streamingConnectionTimeout: streamingConnectionTimeout,

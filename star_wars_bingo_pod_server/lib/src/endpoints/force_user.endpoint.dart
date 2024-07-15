@@ -33,8 +33,6 @@ class ForceUserEndpoint extends Endpoint {
     late List<Droid> droidsRes;
 
     await session.db.transaction((transaction) async {
-      print('Create laser saber: ${forceUser.laserSaber}');
-
       laserSaberRes = await LaserSaber.db.insertRow(
         session,
         forceUser.laserSaber,
@@ -118,43 +116,11 @@ class ForceUserEndpoint extends Endpoint {
           id: forceUser.id,
           type: forceUser.type,
           name: forceUser.name,
+          laserSaberId: forceUser.laserSaber.id,
+          masterId: forceUser.master?.id,
         ),
       );
     });
-
-    await ForceUserRaw.db.attachRow.laserSaber(
-      session,
-      forceUserRawRes,
-      laserSaberRes,
-    );
-
-    await ForceUserRaw.db.attach.droids(
-      session,
-      forceUserRawRes,
-      droidsRes,
-    );
-
-    if ((forceUser.type == ForceUserType.jediMaster ||
-            forceUser.type == ForceUserType.sithMaster) &&
-        forceUser.apprentices.isNotEmpty) {
-      forceUser.apprentices.map(
-        (apprentice) async => await addApprenticeToMaster(
-          session,
-          masterId: forceUser.id!,
-          apprenticeId: apprentice.id!,
-        ),
-      );
-    }
-
-    if ((forceUser.type == ForceUserType.jediApprentice ||
-            forceUser.type == ForceUserType.sithApprentice) &&
-        forceUser.master != null) {
-      await addMasterToApprentice(
-        session,
-        apprenticeId: forceUser.id!,
-        masterId: forceUser.master!.id!,
-      );
-    }
 
     final ForceUserRaw res = await ForceUserRawUtils.get(
       session: session,
@@ -188,6 +154,14 @@ class ForceUserEndpoint extends Endpoint {
           transaction: transaction,
         );
 
+        if (forceUserRawRes.droids != null) {
+          await Droid.db.delete(
+            session,
+            forceUserRawRes.droids!,
+            transaction: transaction,
+          );
+        }
+
         final ForceUserRaw deletedForceUserRes =
             await ForceUserRaw.db.deleteRow(
           session,
@@ -201,14 +175,6 @@ class ForceUserEndpoint extends Endpoint {
           await LaserSaber.db.deleteRow(
             session,
             forceUserRawRes.laserSaber!,
-            transaction: transaction,
-          );
-        }
-
-        if (forceUserRawRes.droids != null) {
-          await Droid.db.delete(
-            session,
-            forceUserRawRes.droids!,
             transaction: transaction,
           );
         }
