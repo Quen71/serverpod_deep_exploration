@@ -30,7 +30,6 @@ class ForceUserEndpoint extends Endpoint {
   ) async {
     late ForceUserRaw forceUserRawRes;
     late LaserSaber laserSaberRes;
-    late List<Droid> droidsRes;
 
     await session.db.transaction((transaction) async {
       laserSaberRes = await LaserSaber.db.insertRow(
@@ -38,11 +37,7 @@ class ForceUserEndpoint extends Endpoint {
         forceUser.laserSaber,
         transaction: transaction,
       );
-      droidsRes = await Droid.db.insert(
-        session,
-        forceUser.droids,
-        transaction: transaction,
-      );
+
       forceUserRawRes = await ForceUserRaw.db.insertRow(
         session,
         ForceUserRaw(
@@ -51,17 +46,25 @@ class ForceUserEndpoint extends Endpoint {
         ),
         transaction: transaction,
       );
+
+      if (forceUserRawRes.id == null) throw Error();
+
+      final List<Droid> droidsToInsert = forceUser.droids
+          .map(
+              (droid) => droid.copyWith(forceUserMasterId: forceUserRawRes.id!))
+          .toList();
+
+      await Droid.db.insert(
+        session,
+        droidsToInsert,
+        transaction: transaction,
+      );
     });
 
     await ForceUserRaw.db.attachRow.laserSaber(
       session,
       forceUserRawRes,
       laserSaberRes,
-    );
-    await ForceUserRaw.db.attach.droids(
-      session,
-      forceUserRawRes,
-      droidsRes,
     );
 
     final ForceUserRaw res = await ForceUserRawUtils.get(

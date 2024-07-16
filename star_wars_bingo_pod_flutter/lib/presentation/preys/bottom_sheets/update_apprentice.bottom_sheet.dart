@@ -71,10 +71,10 @@ class _UpdateApprenticeBottomSheetState
         droidFirst = droid.copyWith(name: _firstDroidNameController.text);
       }
       if (index == 1) {
-        droidSecond = droid.copyWith(name: _firstDroidNameController.text);
+        droidSecond = droid.copyWith(name: _secondDroidNameController.text);
       }
       if (index == 3) {
-        droidThird = droid.copyWith(name: _firstDroidNameController.text);
+        droidThird = droid.copyWith(name: _thirdDroidNameController.text);
       }
       return MapEntry(index, droid);
     });
